@@ -16,20 +16,31 @@ public class HelperBase {
     public void type(By locator, String text) {
         WebElement element = wd.findElement(locator);
         element.click();
-        element.clear();  // clear field to make sure it's empty
+       element.clear();  // clear field to make sure it's empty
         if (text != null) {
             element.sendKeys(text);
         }
     }
 
     public void click(By locator){
-        WebElement element = wd.findElement(locator);
-        element.click();
+
+        //  WebElement element = wd.findElement(locator);
+       // element.click();
+        wd.findElement(locator).click();
+
     }
 
     public boolean isElementPresent(By locator){
-        List<WebElement> list = wd.findElements(locator);
-        return list.size()>0;
+      //  List<WebElement> list = wd.findElements(locator);
+     //   return list.size()>0;
+       return wd.findElements(locator).size()>0;
+    }
 
+    public void pause(int time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
