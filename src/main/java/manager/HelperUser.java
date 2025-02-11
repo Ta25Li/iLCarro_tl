@@ -1,5 +1,6 @@
 package manager;
 
+import models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,9 +21,14 @@ public class HelperUser extends HelperBase {
         type(By.id("email"), email);
         type(By.id("password"), password);
 
-
     }
 
+    public void fillLogForm(User user) {
+        type(By.id("email"), user.getEmail());
+        type(By.id("password"), user.getPassword());
+
+
+    }
     public void submitLogin() { //find btn Login and click
         click(By.xpath("//button[@type='submit']"));
     }
@@ -39,8 +45,9 @@ public class HelperUser extends HelperBase {
     }
 
     public void okClick() {
-        click(By.xpath("//button[@type='button']"));
-        //"//button[text()='Ok']"
+        if (isElementPresent(By.xpath("//button[text()='Ok']")))
+            click(By.xpath("//button[text()='Ok']"));
+        //("//button[@type='button']"));
     }
 
     //public void clickLogout(){
@@ -55,5 +62,21 @@ public class HelperUser extends HelperBase {
         click(By.xpath("//a[normalize-space()='Logout']"));
     }
 
+//===========negative========================================
+public void tearDown(){
+    //   if (driver != null)
+    //     driver.quit();
+} 
 
+
+public String getWrongEmailErorr() {
+   return wd.findElement(By.xpath(" //div[@class='error']/div")).getText();
+}
+    public String getWrongPass() {
+   return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
+    }
+
+    public String getEmptyPasswordErorr() {
+        return wd.findElement(By.xpath("//div[text()=' Password is required ']")).getText();
+    }
 }
