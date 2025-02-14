@@ -55,7 +55,8 @@ public class LoginTests extends TestBase {
             app.getHelperUser().fillLogForm(user);
             app.getHelperUser().submitLogin();
 
-            Assert.assertEquals(app.getHelperUser().getWrongEmailErorr(), "It'snot look like email");
+            Assert.assertEquals(app.getHelperUser().getErorrText(), "It'snot look like email");
+Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
 
     }
     @Test
@@ -66,7 +67,7 @@ public class LoginTests extends TestBase {
         app.getHelperUser().fillLogForm(user);
         app.getHelperUser().submitLogin();
 
-        Assert.assertEquals(app.getHelperUser().getWrongPass(), "\"Login or Password incorrect\"");
+        Assert.assertEquals(app.getHelperUser().getMessage(), "\"Login or Password incorrect\"");
 
     }
     @Test
@@ -77,7 +78,8 @@ public class LoginTests extends TestBase {
         app.getHelperUser().fillLogForm(user);
         app.getHelperUser().submitLogin();
 
-        Assert.assertEquals(app.getHelperUser().getWrongEmailErorr(), "Email is required");
+        Assert.assertEquals(app.getHelperUser().getErorrText(), "Email is required");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
     }
     @Test
     public void emptyPassword() {
@@ -86,9 +88,10 @@ public class LoginTests extends TestBase {
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
         app.getHelperUser().submitLogin();
+        app.getHelperUser().pause(5000);
 
-        Assert.assertEquals(app.getHelperUser().getEmptyPasswordErorr(), "Password is required");
-
+        Assert.assertEquals(app.getHelperUser().getErorrText(), "Password is required");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
     }
     @Test
     public void unregedUser() {
@@ -98,14 +101,14 @@ public class LoginTests extends TestBase {
         app.getHelperUser().fillLogForm(user);
         app.getHelperUser().submitLogin();
 
-        Assert.assertEquals(app.getHelperUser().getWrongPass(), "\"Login or Password incorrect\"");
+        Assert.assertEquals(app.getHelperUser().getMessage(), "\"Login or Password incorrect\"");
     }
 
 
 
    @AfterMethod
   public void postCondition(){
-      app.getHelperUser().okClick();
+        app.getHelperUser().okClick();
    }
     }
 

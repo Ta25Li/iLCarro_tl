@@ -69,14 +69,10 @@ public void tearDown(){
 } 
 
 
-public String getWrongEmailErorr() {
-   return wd.findElement(By.xpath(" //div[@class='error']/div")).getText();
+public String getErorrText() {
+   return wd.findElement(By.cssSelector("div.error")).getText();
+   //(By.xpath(" //div[@class='error']/div"))
 }
-    public String getWrongPass() {
-   return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
-    }
 
-    public String getEmptyPasswordErorr() {
-        return wd.findElement(By.xpath("//div[text()=' Password is required ']")).getText();
-    }
+
 }
