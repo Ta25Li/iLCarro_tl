@@ -19,7 +19,7 @@ public class LoginTests extends TestBase {
     public void loginSuccess() {
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm("leya@bach.com", "leyaBach9!");
-        app.getHelperUser().submitLogin();
+        app.getHelperUser().submit();
         Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
       //  app.getHelperUser().okClick();
 
@@ -30,7 +30,7 @@ public class LoginTests extends TestBase {
 
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
-        app.getHelperUser().submitLogin();
+        app.getHelperUser().submit();
         Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
 
 
@@ -40,7 +40,7 @@ public class LoginTests extends TestBase {
     public void loginSuccessModel() {
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm("leya@bach.com", "leyaBach9!");
-        app.getHelperUser().submitLogin();
+        app.getHelperUser().submit();
         Assert.assertTrue(app.getHelperUser().isLogged());
     //    app.getHelperUser().okClick();
     }
@@ -53,7 +53,7 @@ public class LoginTests extends TestBase {
 
             app.getHelperUser().openLogForm();
             app.getHelperUser().fillLogForm(user);
-            app.getHelperUser().submitLogin();
+            app.getHelperUser().submit();
 
             Assert.assertEquals(app.getHelperUser().getErorrText(), "It'snot look like email");
 Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
@@ -65,7 +65,7 @@ Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
 
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
-        app.getHelperUser().submitLogin();
+        app.getHelperUser().submit();
 
         Assert.assertEquals(app.getHelperUser().getMessage(), "\"Login or Password incorrect\"");
 
@@ -76,7 +76,7 @@ Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
 
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
-        app.getHelperUser().submitLogin();
+        app.getHelperUser().submit();
 
         Assert.assertEquals(app.getHelperUser().getErorrText(), "Email is required");
         Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
@@ -87,7 +87,7 @@ Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
 
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
-        app.getHelperUser().submitLogin();
+        app.getHelperUser().submit();
         app.getHelperUser().pause(5000);
 
         Assert.assertEquals(app.getHelperUser().getErorrText(), "Password is required");
@@ -99,7 +99,7 @@ Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
 
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
-        app.getHelperUser().submitLogin();
+        app.getHelperUser().submit();
 
         Assert.assertEquals(app.getHelperUser().getMessage(), "\"Login or Password incorrect\"");
     }

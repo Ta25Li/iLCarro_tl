@@ -1,9 +1,7 @@
 package manager;
 
 import models.User;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 public class HelperUser extends HelperBase {
     public HelperUser(WebDriver wd) {
@@ -29,7 +27,7 @@ public class HelperUser extends HelperBase {
 
 
     }
-    public void submitLogin() { //find btn Login and click
+    public void submit() { //find btn Login and click
         click(By.xpath("//button[@type='submit']"));
     }
 
@@ -63,10 +61,6 @@ public class HelperUser extends HelperBase {
     }
 
 //===========negative========================================
-public void tearDown(){
-    //   if (driver != null)
-    //     driver.quit();
-} 
 
 
 public String getErorrText() {
@@ -74,5 +68,24 @@ public String getErorrText() {
    //(By.xpath(" //div[@class='error']/div"))
 }
 
+//------ Registration -----------------------
 
+    public void openRegistrationForm() {
+click(By.xpath("//*[text() = ' Sign up ']"));
+    }
+
+    public void fillRegistrationForm(User user) {
+        type(By.id("name"),user.getFirstName());
+        type(By.id("lastName"),user.getLastName());
+        type(By.id("email"),user.getEmail());
+        type(By.id("password"),user.getPassword());
+    }
+
+    public void checkPolicy() {
+      //  click(By.id("terms-of-use")); // not working as size 0
+      //  click(By.cssSelector("label[for='terms-of-use']"));  not working as clickin in the middle of the field and opens tems of use
+
+        JavascriptExecutor js =(JavascriptExecutor) wd;
+        js.executeScript("document.querySelector('#terms-of-use').click();");
+    }
 }
