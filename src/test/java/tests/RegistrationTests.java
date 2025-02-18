@@ -1,6 +1,7 @@
 package tests;
 
 import models.User;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -20,10 +21,10 @@ public class RegistrationTests extends TestBase {
     public void registrationSuccess() {
         Random random = new Random();
         int i = random.nextInt(1000);
-        // int i = random.nextInt(1000)+1000;   to make the random number bigger - might have repeted numbers
+        // int i = random.nextInt(1000)+1000;   to make the random number bigger - might have repeated numbers
         System.out.println(i);
 
-        System.out.println(System.currentTimeMillis());  // to avoid repeted numbers
+        System.out.println(System.currentTimeMillis());  // to avoid repeated numbers
         int z = (int) ((System.currentTimeMillis() / 1000) % 3600); // to make integer from long
         System.out.println(z);
 
@@ -41,6 +42,156 @@ public class RegistrationTests extends TestBase {
         Assert.assertEquals(app.getHelperUser().getMessage(),"You are logged in success");
 
     }
+    //===== negative =====
+ @Test
+    public void regWrongEmail() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        System.out.println(i);
+
+        User user = new User()
+                .setFirstName("Anna")
+                .setLastName("Stone")
+                .setEmail("stone" + i + "email.com")
+                .setPassword("Stone123456!");
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicy();
+
+        Assert.assertEquals(app.getHelperUser().getErorrTextReg(), "Wrong email format");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+
+    }
+
+    @Test
+    public void regWrongPassword() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        System.out.println(i);
+
+        User user = new User()
+                .setFirstName("Anna")
+                .setLastName("Stone")
+                .setEmail("stone" + i + "@email.com")
+                .setPassword("Stone11");
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().click(By.xpath("//label[@for='password']"));
+        app.getHelperUser().checkPolicy();
+
+
+        Assert.assertEquals(app.getHelperUser().getErorrText(), "Password must contain minimum 8 symbols\n" +
+                "Password must contain 1 uppercase letter, 1 lowercase letter, 1 number and one special symbol of [@$#^&*!]");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+
+    }
+    @Test
+    public void regEmptyEmail() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        System.out.println(i);
+
+        User user = new User()
+                .setFirstName("Anna")
+                .setLastName("Stone")
+                .setEmail("")
+                .setPassword("Stone123456!");
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().click(By.id("email"));
+        app.getHelperUser().checkPolicy();
+
+        Assert.assertEquals(app.getHelperUser().getErorrText(), "Email is required");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+    }
+    @Test
+    public void regEmptyPassword() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        System.out.println(i);
+
+        User user = new User()
+                .setFirstName("Anna")
+                .setLastName("Stone")
+                .setEmail("stone" + i + "@email.com")
+                .setPassword("");
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().click(By.xpath("//label[@for='password']"));
+        app.getHelperUser().checkPolicy();
+
+        Assert.assertEquals(app.getHelperUser().getErorrText(), "Password is required");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+    }
+    @Test
+    public void regEmptyName() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        System.out.println(i);
+
+        User user = new User()
+                .setFirstName("")
+                .setLastName("Stone")
+                .setEmail("stone" + i + "@email.com")
+                .setPassword("Stone123456!");
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().click(By.xpath("//label[@for='name']"));
+        app.getHelperUser().checkPolicy();
+
+        Assert.assertEquals(app.getHelperUser().getErorrText(), "Name is required");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+    }
+
+    @Test
+    public void regEmptyLastName() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        System.out.println(i);
+
+        User user = new User()
+                .setFirstName("Anna")
+                .setLastName("")
+                .setEmail("stone" + i + "@email.com")
+                .setPassword("Stone123456!");
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().click(By.xpath("//label[@for='name']"));
+        app.getHelperUser().checkPolicy();
+
+        Assert.assertEquals(app.getHelperUser().getErorrText(), "Last name is required");
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+    }
+
+    @Test
+    public void regNoCheckBox() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        System.out.println(i);
+
+        User user = new User()
+                .setFirstName("Anna")
+                .setLastName("Stone")
+                .setEmail("stone" + i + "@email.com")
+                .setPassword("Stone123456!");
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+
+        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+    }
+
+
+
+
+
+//===============================================================================
     @AfterMethod
     public void postCondition(){
         app.getHelperUser().okClick();

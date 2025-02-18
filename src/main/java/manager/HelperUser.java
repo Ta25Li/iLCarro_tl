@@ -88,4 +88,9 @@ click(By.xpath("//*[text() = ' Sign up ']"));
         JavascriptExecutor js =(JavascriptExecutor) wd;
         js.executeScript("document.querySelector('#terms-of-use').click();");
     }
+
+    public String getErorrTextReg() {
+        return wd.findElement(By.xpath("//*[text()='Wrong email format']")).getText();
+
+    }
 }
