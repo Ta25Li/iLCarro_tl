@@ -25,7 +25,7 @@ public class HelperBase {
     }
 
     public void clearNew(WebElement element){ //type and clear - imitate empty field
-        element.sendKeys("");
+        element.sendKeys(" ");
         element.sendKeys(Keys.BACK_SPACE);
     }
 

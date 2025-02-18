@@ -78,7 +78,6 @@ public class RegistrationTests extends TestBase {
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().click(By.xpath("//label[@for='password']"));
         app.getHelperUser().checkPolicy();
 
 
@@ -101,7 +100,6 @@ public class RegistrationTests extends TestBase {
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().click(By.id("email"));
         app.getHelperUser().checkPolicy();
 
         Assert.assertEquals(app.getHelperUser().getErorrText(), "Email is required");
@@ -121,7 +119,6 @@ public class RegistrationTests extends TestBase {
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().click(By.xpath("//label[@for='password']"));
         app.getHelperUser().checkPolicy();
 
         Assert.assertEquals(app.getHelperUser().getErorrText(), "Password is required");
@@ -141,8 +138,7 @@ public class RegistrationTests extends TestBase {
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().click(By.xpath("//label[@for='name']"));
-        app.getHelperUser().checkPolicy();
+       app.getHelperUser().checkPolicy();
 
         Assert.assertEquals(app.getHelperUser().getErorrText(), "Name is required");
         Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
@@ -162,8 +158,7 @@ public class RegistrationTests extends TestBase {
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().click(By.xpath("//label[@for='name']"));
-        app.getHelperUser().checkPolicy();
+      app.getHelperUser().checkPolicy();
 
         Assert.assertEquals(app.getHelperUser().getErorrText(), "Last name is required");
         Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
