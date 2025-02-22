@@ -2,6 +2,7 @@ package manager;
 
 import models.User;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 public class HelperUser extends HelperBase {
     public HelperUser(WebDriver wd) {
@@ -67,6 +68,10 @@ public String getErorrText() {
    return wd.findElement(By.cssSelector("div.error")).getText();
    //(By.xpath(" //div[@class='error']/div"))
 }
+    public String getErorrTextReg() {
+        return wd.findElement(By.xpath("//*[text()='Wrong email format']")).getText();
+
+    }
 
 //------ Registration -----------------------
 
@@ -97,11 +102,23 @@ click(By.xpath("//*[text() = ' Sign up ']"));
         }
     }
 
+    public void checkPolicyXY(){
+        WebElement label = wd.findElement(By.cssSelector("label[for='terms-of-use']"));
+        Rectangle rectangle = label.getRect(); //элемент знает свои координаты
+        int w = rectangle.getWidth(); //вытащить щирину объекта
+        int xOffset = -w/2;  //сдвинуть на половину элемента в верхний левый угол
 
+      //  Dimension size = wd.manage().window().getSize(); // узнать размеры экрана
 
-
-    public String getErorrTextReg() {
-        return wd.findElement(By.xpath("//*[text()='Wrong email format']")).getText();
+        Actions actions = new Actions(wd);
+        actions.moveToElement(label,xOffset,0).click().release().perform();
+        //кликнуть в верхний левый угол элемента
 
     }
+
+
+
+
+
+
 }
