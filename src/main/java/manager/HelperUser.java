@@ -115,10 +115,12 @@ click(By.xpath("//*[text() = ' Sign up ']"));
         //кликнуть в верхний левый угол элемента
 
     }
+//======================================================
 
-
-
-
-
-
+    public void login(User user) {
+        openLogForm();
+        fillLogForm(user);
+        submit();
+        okClick();
+    }
 }
