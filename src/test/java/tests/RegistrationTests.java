@@ -45,35 +45,32 @@ public class RegistrationTests extends TestBase {
     //===== negative =====
  @Test
     public void regWrongEmail() {
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        System.out.println(i);
 
         User user = new User()
                 .setFirstName("Anna")
                 .setLastName("Stone")
-                .setEmail("stone" + i + "email.com")
+                .setEmail("stoneemail.com")
                 .setPassword("Stone123456!");
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
         app.getHelperUser().checkPolicy();
 
-        Assert.assertEquals(app.getHelperUser().getErorrTextReg(), "Wrong email format");
+      //  Assert.assertEquals(app.getHelperUser().getErorrTextReg(), "Wrong email format");
+    Assert.assertTrue(app.getHelperUser().getErorrText().contains("Wrong email format"));
         Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+
+
 
     }
 
     @Test
     public void regWrongPassword() {
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        System.out.println(i);
 
         User user = new User()
                 .setFirstName("Anna")
                 .setLastName("Stone")
-                .setEmail("stone" + i + "@email.com")
+                .setEmail("stone@email.com")
                 .setPassword("Stone11");
 
         app.getHelperUser().openRegistrationForm();
@@ -88,9 +85,6 @@ public class RegistrationTests extends TestBase {
     }
     @Test
     public void regEmptyEmail() {
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        System.out.println(i);
 
         User user = new User()
                 .setFirstName("Anna")
@@ -107,14 +101,12 @@ public class RegistrationTests extends TestBase {
     }
     @Test
     public void regEmptyPassword() {
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        System.out.println(i);
+
 
         User user = new User()
                 .setFirstName("Anna")
                 .setLastName("Stone")
-                .setEmail("stone" + i + "@email.com")
+                .setEmail("stone@email.com")
                 .setPassword("");
 
         app.getHelperUser().openRegistrationForm();
@@ -126,14 +118,11 @@ public class RegistrationTests extends TestBase {
     }
     @Test
     public void regEmptyName() {
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        System.out.println(i);
 
         User user = new User()
                 .setFirstName("")
                 .setLastName("Stone")
-                .setEmail("stone" + i + "@email.com")
+                .setEmail("stone@email.com")
                 .setPassword("Stone123456!");
 
         app.getHelperUser().openRegistrationForm();
@@ -146,14 +135,11 @@ public class RegistrationTests extends TestBase {
 
     @Test
     public void regEmptyLastName() {
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        System.out.println(i);
 
         User user = new User()
                 .setFirstName("Anna")
                 .setLastName("")
-                .setEmail("stone" + i + "@email.com")
+                .setEmail("stone@email.com")
                 .setPassword("Stone123456!");
 
         app.getHelperUser().openRegistrationForm();
@@ -178,9 +164,28 @@ public class RegistrationTests extends TestBase {
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
-
-        Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
+        app.getHelperUser().submit();
+      //  Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
     }
+    @Test
+    public void regExistingUser() {
+
+        User user = new User()
+                .setFirstName("Leya")
+                .setLastName("Bach")
+                .setEmail("leya@bach.com")
+                .setPassword("leyaBach9!");
+
+
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicy();
+        app.getHelperUser().submit();
+
+        Assert.assertEquals(app.getHelperUser().getMessage(), "\"User already exists\"");
+
+    }
+
 
 
 

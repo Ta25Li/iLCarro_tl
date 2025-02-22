@@ -81,13 +81,24 @@ click(By.xpath("//*[text() = ' Sign up ']"));
         type(By.id("password"),user.getPassword());
     }
 
-    public void checkPolicy() {
+    public void checkPolicy1() {
       //  click(By.id("terms-of-use")); // not working as size 0
       //  click(By.cssSelector("label[for='terms-of-use']"));  not working as clickin in the middle of the field and opens tems of use
 
         JavascriptExecutor js =(JavascriptExecutor) wd;
         js.executeScript("document.querySelector('#terms-of-use').click();");
     }
+    public void checkPolicy() {
+
+        if (!wd.findElement(By.id("terms-of-use")).isSelected()) { //if not selected then click
+
+            JavascriptExecutor js = (JavascriptExecutor) wd;
+            js.executeScript("document.querySelector('#terms-of-use').click();");
+        }
+    }
+
+
+
 
     public String getErorrTextReg() {
         return wd.findElement(By.xpath("//*[text()='Wrong email format']")).getText();
