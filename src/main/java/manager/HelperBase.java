@@ -4,11 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class HelperBase {
     WebDriver wd;
+    Logger logger = LoggerFactory.getLogger(HelperBase.class);
 
     public HelperBase(WebDriver wd) {
         this.wd = wd;

@@ -13,16 +13,30 @@ public class LoginTests extends TestBase {
         //   if SignOut present --> logout
         if (app.getHelperUser().isLogged())
             app.getHelperUser().logout();
+
+        logger.info("Before method - logout performed");
+
     }
 
     @Test
     public void loginSuccess() {
+        logger.info("Start");
+
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm("leya@bach.com", "leyaBach9!");
+        logger.info("Test data---> email: 'leya@bach.com' & password: 'leyaBach9!'");
+
         app.getHelperUser().submit();
         Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
       //  app.getHelperUser().okClick();
 
+        logger.info("Assert check is element 'Logged in success' present");
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
     @Test
     public void loginSuccess1() {
@@ -51,6 +65,8 @@ public class LoginTests extends TestBase {
         public void wrongEmail() {
             User user = new User().setEmail("leyabach.com").setPassword("leyaBach9!");
 
+         logger.info("Test data---> email: 'leyabach.com' & password: 'leyaBach9!'");
+
             app.getHelperUser().openLogForm();
             app.getHelperUser().fillLogForm(user);
             app.getHelperUser().submit();
@@ -63,6 +79,8 @@ Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
     public void wrongPassword() {
         User user = new User().setEmail("leya@bach.com").setPassword("leyaBach9");
 
+        logger.info("Test data---> email: 'leya@bach.com' & password: 'leyaBach9'");
+
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
         app.getHelperUser().submit();
@@ -73,6 +91,7 @@ Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
     @Test
     public void emptyEmail() {
         User user = new User().setEmail("").setPassword("leyaBach9!");
+
 
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
@@ -96,6 +115,7 @@ Assert.assertTrue(app.getHelperUser().isYallaBtnNotActive());
     @Test
     public void unregedUser() {
         User user = new User().setEmail("unreged@bach.com").setPassword("unreged9!");
+        logger.info("Test data---> email: 'unreged@bach.com' & password: 'unreged9!'");
 
         app.getHelperUser().openLogForm();
         app.getHelperUser().fillLogForm(user);
