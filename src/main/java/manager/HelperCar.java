@@ -61,7 +61,9 @@ public class HelperCar extends HelperBase {
 
     //===============================================================
     public void searchCurrentMonth(String city, String dateFrom, String dateTo) {
+
         typeCity(city);
+        clearTextBox(By.id("dates"));
         click(By.id("dates"));
         //"3/10/2024","3/27/2025"
 
@@ -77,6 +79,7 @@ public class HelperCar extends HelperBase {
     }
 
     private void typeCity(String city) {
+        clearTextBox(By.id("city"));
         type(By.id("city"), city);
         click(By.cssSelector("div.pac-item"));
 
@@ -89,33 +92,86 @@ public class HelperCar extends HelperBase {
     ;
 
     public void searchCurrentYear(String city, String dateFrom, String dateTo) {
+
         typeCity(city);
+        clearTextBox(By.id("dates"));
         click(By.id("dates"));
-        //"4/27/2024","6/28/2025"
+        //"4/27/2025","6/28/2025"
 
         LocalDate now = LocalDate.now();  //format yyyy-mm-dd
         int year = now.getYear();
         int month = now.getMonthValue();
         int day = now.getDayOfMonth();
 
-        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/dd/yy")); //M - month w/o 01,02 - > 1,2 ---     turn date string into int
+        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
+        //M - month w/o 01,02 - > 1,2 ---     turn date string into int
+        LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
 // LocalDate from1 = LocalDate.parse("2013:23/02", DateTimeFormatter.ofPattern("yyyy:dd/MM")); //change any date to needed format
 
-        int diffMonth = from.getMonthValue() - month; // difference today from start date
-        if (diffMonth >0)
-        clickNextMthBtn(diffMonth);
-        click(By.xpath("//div[text()=' " + from.getDayOfMonth() + " ']"));
+        // difference today from start date
+        int diffMonth = from.getMonthValue() - month;
+        if (diffMonth > 0)
+            clickNextMthBtn(diffMonth);
+
+        click(By.xpath("//div[text()= ' " + from.getDayOfMonth() + " ']"));
+
+        diffMonth = to.getMonthValue() - from.getMonthValue();
+        if (diffMonth > 0)
+            clickNextMthBtn(diffMonth);
+
+        //"//div[text()= ' " + from[1] + " ']";
+        String locator = String.format("//div[text()= ' %s ']", to.getDayOfMonth());
+        click(By.xpath(locator));
 
 
     }
 
     private void clickNextMthBtn(int diffMonth) {
-        for (int i = 0; i < diffMonth ; i++) {
+        for (int i = 0; i < diffMonth; i++) {
             click(By.cssSelector("button[aria-label='Next month']"));
-            
+
         }
 
     }
 
 
+    public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
+
+        typeCity(city);
+        clearTextBox(By.id("dates"));
+        click(By.id("dates"));
+
+        LocalDate now = LocalDate.now(); // today's date
+        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
+        LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
+
+        int diffYear; // в том ли году, когда начало аренды
+        int diffMonth;// в том ли месяце
+
+//*** from
+        diffYear = from.getYear() - now.getYear();
+        if (diffYear == 0) { // if same year then count mths
+            diffMonth = from.getMonthValue() - now.getMonthValue();
+        } else
+            diffMonth = 12 - now.getMonthValue() + from.getMonthValue();
+
+        clickNextMthBtn(diffMonth);
+        String locator = String.format("//div[text()= ' %s ']", from.getDayOfMonth());
+        click(By.xpath(locator));
+
+        //*** to
+        diffYear = to.getYear() - from.getYear();
+        if (diffYear == 0) {
+            diffMonth = to.getMonthValue() - from.getMonthValue();
+        } else
+            diffMonth = 12 - from.getMonthValue() + to.getMonthValue();
+
+        clickNextMthBtn(diffMonth);
+       locator = String.format("//div[text()= ' %s ']", to.getDayOfMonth());
+        click(By.xpath(locator));
+    }
+
+    public void navigateByLogo() {
+        click(By.cssSelector("a.logo"));
+    }
 }
